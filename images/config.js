@@ -31,6 +31,4 @@ const imgConfig = {
     enemy3_boom3: 'images/enemy2_down3.png',
     enemy3_boom4: 'images/enemy2_down4.png',
     enemy3_hit1: 'images/enemy2_hit.png',
-    //
-    fire: 'images/ball.png'
 }

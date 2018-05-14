@@ -12,28 +12,37 @@ class ScenePlay extends GuaScene {
     }
     setup(){
         var s = this
+        //
+        s.score = 0
         s.bg = GuaImage.new(s.game, 'background')
+        s.upLine = 0
+        s.downLine = 600
+
+        //
+        s.enemys = []
         s.enemysBullet = []
+        s.player = Player.new(s.game)
         s.playerBullet = []
         s.numberOfEnemys = 1
-        s.player = Player.new(s.game)
 
         s.addElement(s.bg)
         s.addElement(s.player)
         s.addEnemys()
     }
 
+    create_enemy(){
+        var type = randomBtween(1, 2)
+        var e = Enemys[type].new(this.game)
+        this.enemys.push(e)
+        this.addElement(e)
+    }
+
     addEnemys() {
         var s = this
-        var es = []
         var list = s.numberOfEnemys
         for (var i = 0; i < list; i++) {
-            var type = randomBtween(1, 3)
-            var e = Enemys[type].new(s.game)
-            es.push(e)
-            s.addElement(e)
+            s.create_enemy()
         }
-        this.enemys = es
     }
 
     setupInputs() {
@@ -61,39 +70,61 @@ class ScenePlay extends GuaScene {
 
     update() {
         super.update()
-
         var s = this
 
+        s.getAliveEle()
+
+        s.boomRequired()
+
+        if (s.enemys.length < s.numberOfEnemys) {
+            s.create_enemy()
+        }
+    }
+
+    addScore(n){
+        this.score += n
+    }
+
+    getAliveEle(){
+        var s = this
         s.playerBullet = s.playerBullet.filter(ele => ele.alive)
         s.enemysBullet = s.enemysBullet.filter(ele => ele.alive)
         s.enemys = s.enemys.filter(ele => ele.alive)
+    }
 
-        for (var e of this.enemys) {
-            if (s.player.lifes > 0 && rectIntersects(s.player, e)) {
-                s.player.lifes--;
-                e.lifes--;
-            }
-        }
-
-        for (var eb of s.enemysBullet) {
-            if (s.player.lifes > 0 && rectIntersects(s.player, eb)) {
-                s.player.lifes--;
-                eb.lifes--;
-            }
-        }
-
-        for (var pb of s.playerBullet) {
-            for (var e of s.enemys) {
-                if (rectIntersects(pb, e)) {
+    boomRequired(){
+        var s = this
+        if (s.player.lifes > 0) {
+            for (var e of this.enemys) {
+                if (rectIntersects(s.player, e)) {
+                    s.player.lifes--;
                     e.lifes--;
-                    pb.lifes--;
                 }
             }
 
             for (var eb of s.enemysBullet) {
-                if (rectIntersects(eb, pb)) {
-                    pb.lifes--;
+                if (eb.particleName != 'particle' && rectIntersects(s.player, eb)) {
+                    s.player.lifes--;
                     eb.lifes--;
+                }
+            }
+        }
+
+
+        for (var pb of s.playerBullet) {
+            if (pb.particleName != 'particle') {
+                for (var e of s.enemys) {
+                    if (rectIntersects(pb, e)) {
+                        e.lifes--;
+                        pb.lifes--;
+                    }
+                }
+
+                for (var eb of s.enemysBullet) {
+                    if (eb.particleName != 'particle' && rectIntersects(pb, eb)) {
+                        pb.lifes--;
+                        eb.lifes--;
+                    }
                 }
             }
         }

@@ -6,19 +6,24 @@ class Enemy extends GuaAnimation{
 
     setup() {
         this.animationName = 'idle'
-        this.speed = 5
-        // this.speed = randomBtween(2, 5)
-        this.x = randomBtween(0, 350)
-        this.y = -randomBtween(0, 200)
+        this.speed = randomBtween(3, 5)
+        this.score = 0
+        // this.x = randomBtween(0, 350)
+        // this.y = -randomBtween(0, 200)
+        this.x = 30
+        this.y = 60
         this.coolDown = 0
         this.endTime = this.animations['boom']['frameCount']
+        this.bulletConfig = {
+            name: 'bullet2',
+            speed: -3
+        }
     }
 
     update() {
         super.update()
-        var p = this
         var s = this
-        s.y += s.speed
+        // s.y += s.speed
         if (s.y > 600) {
             s.setup()
         }
@@ -31,31 +36,30 @@ class Enemy extends GuaAnimation{
             s.coolDown--
         }
 
-        if (p.lifes == 0) {
-            p.animationName = 'boom'
-            p.paused = true
+        if (s.lifes == 0) {
+            s.animationName = 'boom'
+            s.paused = true
         }
 
-        if (p.animationName == 'boom') {
-            if ((p.frameIndex + 1) == p.animations['boom']['number'] ) {
-                p.endTime -= 1
+        if (s.animationName == 'boom') {
+            if ((s.frameIndex + 1) == s.animations['boom']['number'] ) {
+                s.endTime -= 1
             }
         }
 
-        if (p.endTime == 0) {
-            p.alive = false
+        if (s.endTime == 0) {
+            s.alive = false
+            s.scene.addScore(s.score)
         }
     }
 
 
     fire() {
         if (this.coolDown == 0) {
-            this.coolDown = 50
-            var x = this.x + this.w / 2
-            var y = this.y + this.h
-            var b = Bullet.new(this.game, 'bullet2')
-            b.x = x
-            b.y = y
+            this.coolDown = 30
+            this.bulletConfig.x = this.x + this.w / 2
+            this.bulletConfig.y = this.y + this.h
+            var b = Bullet.new(this.game, this.bulletConfig)
             b.speed = -(this.speed * 2)
             this.scene.addElement(b)
             this.scene.enemysBullet.push(b)
@@ -79,6 +83,17 @@ class Enemy1 extends Enemy{
             }
         }
         super(game, name, animations)
+        // this.score = 100
+        // this.setup()
+    }
+
+    setup(){
+        super.setup()
+        this.score = 100
+        this.bulletConfig = {
+            name: 'bullet2',
+            speed: -1
+        }
     }
 }
 
@@ -103,11 +118,18 @@ class Enemy2 extends Enemy{
             }
         }
         super(game, name, animations)
+        // this.score = 200
+        // this.setup()
     }
 
     setup(){
         super.setup()
         this.lifes = 4
+        this.score = 200
+        this.bulletConfig = {
+            name: 'bullet2',
+            speed: -3
+        }
     }
 }
 
@@ -132,11 +154,17 @@ class Enemy3 extends Enemy{
             }
         }
         super(game, name, animations)
+        this.score = 300
     }
 
     setup(){
         super.setup()
         this.lifes = 6
+        this.score = 300
+        this.bulletConfig = {
+            name: 'bullet2',
+            speed: -3
+        }
     }
 }
 

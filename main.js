@@ -4,12 +4,12 @@ var enableDebugMode = function(game, enable) {
     }
     window.paused = false
 
-    // window.addEventListener('keydown', function(event){
-    //     var k = event.key
-    //     if (k == 'p') {
-    //         paused = !paused
-    //     }
-    // })
+    window.addEventListener('keydown', function(event){
+        var k = event.key
+        if (k == 'p') {
+            paused = !paused
+        }
+    })
 
     //
     document.querySelector('#id-input-speed').addEventListener('change', function(e) {

@@ -22,8 +22,13 @@ class Player extends GuaAnimation{
         this.x = 150
         this.y = 450
         this.coolDown = 0
+        this.bulletConfig = {
+            name: 'bullet1',
+            speed: 10,
+            // x: this.x + this.w / 2,
+            // y: this.y + this.h
+        }
         this.endTime = this.animations['boom']['frameCount']
-        this.fireBullet = []
 
         //
         this.lifes = 6
@@ -51,26 +56,15 @@ class Player extends GuaAnimation{
         if (p.endTime == 0) {
             p.alive = false
         }
-
-        for (var i = 0; i < p.fireBullet.length; i++) {
-            var b = p.fireBullet[i]
-            if (b.y < 0) {
-                // console.log('magua');
-            }
-        }
     }
 
     fire() {
         if (this.coolDown == 0) {
             this.coolDown = 10
-            var x = this.x + this.w / 2
-            var y = this.y
-            // var b = Bullet.new(this.game, '1')
-            var b = Bullet.new(this.game, 'bullet1')
-            b.x = x
-            b.y = y
+            this.bulletConfig.x = this.x + this.w / 2
+            this.bulletConfig.y = this.y
+            var b = Bullet.new(this.game, this.bulletConfig)
             this.scene.addElement(b)
-            // this.fireBullet.push(b)
             this.scene.playerBullet.push(b)
         }
     }

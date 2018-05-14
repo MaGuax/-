@@ -1,7 +1,6 @@
 class GuaParticle extends GuaImage {
     constructor(game, name) {
         super(game, name)
-        this.action = name.split('_')[1]
         this.setup()
     }
 
@@ -18,11 +17,14 @@ class GuaParticle extends GuaImage {
     }
 
     update() {
-        if (this.action == 'particles') {
-            // this.life--
-            this.x += this.vx
-            this.y += this.vy
-        }
+        // if (this.action == 'particles') {
+        //     this.life--
+        //     this.x += this.vx
+        //     this.y += this.vy
+        // }
+        this.life--
+        this.x += this.vx
+        this.y += this.vy
     }
 }
 
@@ -70,15 +72,19 @@ class GuaParticleSystem {
             pList.push(p)
         }
 
-        // if (this.particleName == 'particle') {
-            for(var p of pList) {
-                // p.update()
-                p.y = this.y
-                // if (this.particleName == 'particle') {
-                //     p.update()
-                // }
+        for(var p of pList) {
+            p.y = this.y
+            if (this.particleName == 'particle') {
+                p.update()
             }
+        }
+
+        // if (this.particleName == 'particle') {
+        //     for(var p of pList) {
+        //         p.update()
+        //     }
         // }
+
 
         if (this.particleName == 'all') {
             for (var p of pList) {

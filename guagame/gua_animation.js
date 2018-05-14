@@ -105,9 +105,4 @@ class GuaAnimation {
     draw() {
         this.game.drawImage(this)
     }
-
-    collide(b) {
-        var a = this
-        return rectIntersects(a, b)
-    }
 }
