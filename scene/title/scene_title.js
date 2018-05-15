@@ -2,18 +2,34 @@ class SceneTitle extends GuaScene {
     constructor(game) {
         super(game)
 
-        game.registerAction('k', function(){
-            var s = ScenePlay.new(game, 1)
-            game.replaceScene(s)
-        })
-        game.registerAction('e', function(){
-            var s = SceneEdit.new(game)
-            game.replaceScene(s)
-        })
+        this.setup()
+        this.setupInputs()
     }
 
-    draw() {
-        this.game.context.fillText('k 开始游戏', 100, 100)
-        this.game.context.fillText('e 自定义游戏关卡', 100, 200)
+    setup(){
+        var s = this
+        s.bg = GuaImage.new(s.game, 'background')
+        s.title = GuaImage.new(s.game, 'title')
+        s.title.x = 10
+        s.title.y = 80
+        s.loading = Loading.new(s.game)
+        s.loading.x = 150
+        s.loading.y = 220
+        s.start = GuaImage.new(s.game, 'start')
+        s.start.x = 150
+        s.start.y = 420
+
+        s.addElement(s.bg)
+        s.addElement(s.title)
+        s.addElement(s.start)
+        s.addElement(s.loading)
+    }
+
+    setupInputs(){
+        var s = this
+        s.game.registerAction('p', function(){
+            var scene = ScenePlay.new(s.game, 1)
+            s.game.replaceScene(scene)
+        })
     }
 }

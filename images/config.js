@@ -1,8 +1,17 @@
 const imgConfig = {
     background: 'images/background.png',
+    title: 'images/name.png',
+    start: 'images/start.png',
+    sceneEnd: 'images/gameOver.png',
+    // loading
+    loading_idle1: 'images/game_loading1.png',
+    loading_idle2: 'images/game_loading2.png',
+    loading_idle3: 'images/game_loading3.png',
+    loading_idle4: 'images/game_loading4.png',
     // 玩家
     bullet1_all: 'images/bullet1.png',
     bullet1_particle: 'images/bullet1_2.png',
+    heart: 'images/hero_life.png',
     player_idle1: 'images/hero1.png',
     player_idle2: 'images/hero2.png',
     player_boom1: 'images/hero_down1.png',
