@@ -8,10 +8,8 @@ class Enemy extends GuaAnimation{
         this.animationName = 'idle'
         this.speed = randomBtween(3, 5)
         this.score = 0
-        // this.x = randomBtween(0, 350)
-        // this.y = -randomBtween(0, 200)
-        this.x = 30
-        this.y = 60
+        this.x = randomBtween(25, 400)
+        this.y = -randomBtween(0, 200)
         this.coolDown = 0
         this.endTime = this.animations['boom']['frameCount']
         this.bulletConfig = {
@@ -23,8 +21,8 @@ class Enemy extends GuaAnimation{
     update() {
         super.update()
         var s = this
-        // s.y += s.speed
-        if (s.y > 600) {
+        s.y += s.speed
+        if (s.y > 850 + s.h) {
             s.setup()
         }
 
@@ -56,7 +54,7 @@ class Enemy extends GuaAnimation{
 
     fire() {
         if (this.coolDown == 0) {
-            this.coolDown = 30
+            this.coolDown = 90
             this.bulletConfig.x = this.x + this.w / 2
             this.bulletConfig.y = this.y + this.h
             var b = Bullet.new(this.game, this.bulletConfig)
@@ -83,8 +81,6 @@ class Enemy1 extends Enemy{
             }
         }
         super(game, name, animations)
-        // this.score = 100
-        // this.setup()
     }
 
     setup(){
@@ -118,8 +114,6 @@ class Enemy2 extends Enemy{
             }
         }
         super(game, name, animations)
-        // this.score = 200
-        // this.setup()
     }
 
     setup(){
@@ -154,7 +148,6 @@ class Enemy3 extends Enemy{
             }
         }
         super(game, name, animations)
-        this.score = 300
     }
 
     setup(){

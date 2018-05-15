@@ -1,4 +1,4 @@
-class Player extends GuaAnimation{
+class Player extends GuaAnimation {
     constructor(game) {
         var animations = {
             'idle': {
@@ -24,9 +24,7 @@ class Player extends GuaAnimation{
         this.coolDown = 0
         this.bulletConfig = {
             name: 'bullet1',
-            speed: 10,
-            // x: this.x + this.w / 2,
-            // y: this.y + this.h
+            speed: 10
         }
         this.endTime = this.animations['boom']['frameCount']
 
@@ -48,7 +46,7 @@ class Player extends GuaAnimation{
         }
 
         if (p.animationName == 'boom') {
-            if ((p.frameIndex + 1) == p.animations['boom']['number'] ) {
+            if ((p.frameIndex + 1) == p.animations['boom']['number']) {
                 p.endTime -= 1
             }
         }
@@ -67,6 +65,19 @@ class Player extends GuaAnimation{
             this.scene.addElement(b)
             this.scene.playerBullet.push(b)
         }
+    }
+
+    getHearts(x, y) {
+        var s = this
+        var n = s.lifes + 1
+        var hearts = []
+        for (var i = 1; i < n; i++) {
+            var heart = GuaImage.new(s.game, 'heart')
+            heart.x = x + i * heart.w
+            heart.y = y
+            hearts.push(heart)
+        }
+        return hearts
     }
 
     moveLeft() {

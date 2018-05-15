@@ -11,10 +11,16 @@ class GuaScene {
         this.elements.push(e)
     }
 
+    addElements(es) {
+        for (var i = 0; i < es.length; i++) {
+            var e = es[i]
+            this.addElement(e)
+        }
+    }
+
     draw() {
         for (var i = 0; i < this.elements.length; i++) {
             var e = this.elements[i]
-            // this.game.drawImage(e)
             e.draw()
         }
     }
